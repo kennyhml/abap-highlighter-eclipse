@@ -1,7 +1,7 @@
 # ABAP Highlighter
 A lightweight plug-in for [Eclipse](eclipse) that modifies the [ABAP Development Tools](ADT) to enhance syntax highlighting.
 
-Scanning is performed by the [ABAP Treesitter Grammar](ts). As a result, the limitations and advantages apply.
+Tokenization is performed by the [ABAP Treesitter Grammar](ts) - as a result, the limitations and advantages apply.
 
 [ADT]: https://developers.sap.com/tutorials/abap-install-adt..html
 [ABAP]: https://en.wikipedia.org/wiki/ABAP
