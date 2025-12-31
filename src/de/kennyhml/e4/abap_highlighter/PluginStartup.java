@@ -46,7 +46,6 @@ public class PluginStartup implements IStartup {
 	@SuppressWarnings("restriction")
 	private void modifyReconciler(IAbapSourcePage page) {
 		PresentationReconciler reconciler = page.getExistingPresentationReconciler();
-
 		// We may have already modified this reconcilers repairer
 		IPresentationRepairer rep = reconciler.getRepairer(IDocument.DEFAULT_CONTENT_TYPE);
 		if (rep instanceof AbapDamageRepairer) {
@@ -54,11 +53,11 @@ public class PluginStartup implements IStartup {
 		}
 
 		// Modify the repairer to use our custom damager and repairer instead.
-		AbapDamageRepairer dr = new AbapDamageRepairer(new AbapScanner());
-		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.install(page.getViewer());
-		page.getViewer().invalidateTextPresentation();
+		// AbapDamageRepairer dr = new AbapDamageRepairer(new AbapScanner());
+		// reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+		// reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+		// reconciler.install(page.getViewer());
+		// page.getViewer().invalidateTextPresentation();
 	}
 
 	private IPartListener2 partListener = new IPartListener2() {

@@ -1,6 +1,7 @@
 package de.kennyhml.e4.abap_highlighter;
 
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.swt.widgets.Display;
 
 import java.util.Set;
@@ -18,7 +19,7 @@ import org.eclipse.jface.text.TextPresentation;
  */
 public class AbapDamageRepairer extends DefaultDamagerRepairer {
 
-	public AbapDamageRepairer(AbapScanner scanner) {
+	public AbapDamageRepairer(ITokenScanner scanner) {
 		super(scanner);
 	}
 
@@ -43,7 +44,7 @@ public class AbapDamageRepairer extends DefaultDamagerRepairer {
 				System.out.println("Change at " + event.getOffset() + ": Repairing from " + start + " to " + end);
 			});
 			
-			((AbapScanner) fScanner).getContext().clear();
+			// ((AbapScanner) fScanner).getContext().clear();
 			return new Region(start, end - start);
 		} catch (Exception e) {
 		}
