@@ -1,38 +1,9 @@
-# Warning
-I have abandoned this project for the time being because I hate java.
-
 # ABAP Highlighter
-A lightweight plug-in for [Eclipse](eclipse) that works with and modifies the [ADT Plugin](ADT) to provide better syntax highlighting for the [ABAP](ABAP) programming language.
-It aims to address the highly dissatisfactory ADT syntax highlighting, which groups together tokens with vastly different meanings, to make looking at ABAP code slightly
-more bearable.
+A lightweight plug-in for [Eclipse](eclipse) that modifies the [ABAP Development Tools](ADT) to enhance syntax highlighting.
 
-The highlighter is intended to work for any ABAP version - though very deprecated or recent syntax may not be fully supported. If you encouter issues using the highlighter, please
-open an issue with a clear reproducible example :)
-
-# Supported Token Types
-- ✔️ Functions / Methods
-- ✔️ Identifiers
-- ✔️ Keywords
-- ✔️ Fields
-- ✔️ Comments
-- ✔️ Delimiters
-- ✔️ Operators
-- ✔️ Literals
-- ✔️ Table Keys
-- ❌ Tables *
-
-\* Currently treated as type or identifier, depending on the context. Impossible to derive outside selection without DDIC lookup.
-
-# How does it work?
-The plugin checks for active ADT Editors and modifies their `PresentationReconciler`, the component that is responsible
-for repairing text changes and (re-)creating color tokens based on the contents.
-
-This way, the plug-in can rely on SAP's ABAP Development Tools for the heavy lifting, focusing only on improving the visual aspect.
-
-As of now, the Syntax Highlighter is entirely text-context-based. It can only derive the meaning of words based on what tokens it has already found
-and, occassionally, by checking the next few tokens. If the context required to derive the meaning of an identifier is not located in the statement
-scope itself, much less in the active module, the scanner is unable to look up information about it.
+Scanning is performed by the [ABAP Treesitter Grammar](ts). As a result, the limitations and advantages apply.
 
 [ADT]: https://developers.sap.com/tutorials/abap-install-adt..html
 [ABAP]: https://en.wikipedia.org/wiki/ABAP
 [eclipse]: https://eclipseide.org/
+[ts]: https://github.com/kennyhml/tree-sitter-abap
