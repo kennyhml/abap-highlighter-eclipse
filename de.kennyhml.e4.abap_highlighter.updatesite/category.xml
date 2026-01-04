@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="de.kennyhml.e4.abap_highlighter.feature" version="0.0.0">
+      <category name="de.kennyhml.e4.abap_highlighter"/>
+   </feature>
+   <category-def name="de.kennyhml.e4.abap_highlighter" label="Better ABAP Highlighting for ABAP Development Tools (ADT)">
+      <description>
+      	Advanced Syntax Highlighting for ABAP with the ABAP Development Tools (ADT)
+      </description>
+   </category-def>
+</site>

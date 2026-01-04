@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: de.kennyhml.e4.abap_highlighter;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.jface.text;bundle-version="3.25.200",
+ org.eclipse.core.runtime;bundle-version="3.31.100",
+ com.sap.adt.tools.abapsource.ui;bundle-version="3.44.0",
+ com.sap.rnd.ui,
+ com.sap.adt.util.ui;bundle-version="3.44.0",
+ com.sap.adt.tools.core.ui;bundle-version="3.44.0",
+ com.sap.adt.project;bundle-version="3.44.0"
+Automatic-Module-Name: de.kennyhml.e4.abap_highlighter
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-21
