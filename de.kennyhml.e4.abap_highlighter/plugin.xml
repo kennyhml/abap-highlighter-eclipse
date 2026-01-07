@@ -1,0 +1,6 @@
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="org.eclipse.ui.startup">
+	<startup class="de.kennyhml.e4.abap_highlighter.PluginStartup"> </startup>
+	</extension>
+</plugin>
