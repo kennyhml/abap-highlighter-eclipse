@@ -10,6 +10,14 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.treesitter.TSLanguage;
+import org.treesitter.TSNode;
+import org.treesitter.TSParser;
+import org.treesitter.TSTree;
+
+import java.io.File;
+import java.io.IOException;
+
 import org.eclipse.core.runtime.ILog;
 
 
@@ -32,6 +40,15 @@ public class PluginStartup implements IStartup {
 
 			window.getPartService().addPartListener(partListener);
 			ILog.get().info("Plugin started.");
+			
+			
+	        TSParser parser = new TSParser();
+	        TSLanguage json = new TreeSitterAbap();
+	        parser.setLanguage(json);
+	        TSTree tree = parser.parseString(null, "report z_test.");
+	        TSNode rootNode = tree.getRootNode();
+	        TSNode arrayNode = rootNode.getNamedChild(0);
+	        ILog.get().info(arrayNode.getType());
 		});
 	}
 

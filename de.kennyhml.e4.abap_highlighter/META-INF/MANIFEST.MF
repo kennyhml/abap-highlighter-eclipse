@@ -5,6 +5,9 @@ Bundle-SymbolicName: de.kennyhml.e4.abap_highlighter;singleton:=true
 Bundle-Vendor: %Provider-Name
 Bundle-Localization: plugin
 Bundle-Version: 0.0.1.qualifier
+Bundle-ClassPath: .,
+ lib/tree-sitter.jar,
+ lib/
 Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text;bundle-version="3.25.200",
  org.eclipse.core.runtime;bundle-version="3.31.100",
@@ -13,6 +16,7 @@ Require-Bundle: org.eclipse.ui,
  com.sap.adt.util.ui;bundle-version="3.44.0",
  com.sap.adt.tools.core.ui;bundle-version="3.44.0",
  com.sap.adt.project;bundle-version="3.44.0"
+Bundle-NativeCode: lib/tree-sitter-abap.dll; osname=win32; processor=x86-64
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: de.kennyhml.e4.abap_highlighter

@@ -1,4 +1,5 @@
 package de.kennyhml.e4.abap_highlighter;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TextPresentation;
