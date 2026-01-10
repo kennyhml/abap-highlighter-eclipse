@@ -75,7 +75,7 @@
                 
                 <argument>-I${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src</argument>
                 
-                <argument>${project.basedir}/src/main/native/org_treesitter_TreeSitterAbap.c</argument>
+                <argument>${project.basedir}/src/main/native/de_kennyhml_e4_abap_highlighter_TreeSitterAbap.c</argument>
                 <argument>${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src/parser.c</argument>
                 <argument>${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src/scanner.c</argument>
               </arguments>
