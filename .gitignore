@@ -11,3 +11,4 @@ workspace/
 *.so
 *.dylib
 *.pdb
+.lib

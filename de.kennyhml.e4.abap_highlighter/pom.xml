@@ -3,7 +3,8 @@
   
   <properties>
     <abap.grammar.version>0.0.1</abap.grammar.version>
-    <grammar.src.dir>${project.build.directory}/grammar-src</grammar.src.dir>
+    <abap.grammar.srcPath>${project.build.directory}/tree-sitter-abap-${abap.grammar.version}/src</abap.grammar.srcPath>
+    <abap.grammar.outDir>${project.basedir}/lib</abap.grammar.outDir>
   </properties>
   
   <parent>
@@ -25,6 +26,8 @@
   
   <build>
     <plugins>
+      
+      <!-- Download the abap grammar source from the releases at https://github.com/kennyhml/tree-sitter-abap-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -42,12 +45,33 @@
                      verbose="true" 
                      usetimestamp="true"/>
                 <unzip src="${project.build.directory}/downloads/grammar.zip" 
-                       dest="${grammar.src.dir}" />
+                       dest="${project.build.directory}" />
               </target>
             </configuration>
           </execution>
         </executions>
       </plugin>
+      
+      <!-- Yoink the tree sitter .jar (external dependency) so we can grab and bundle it -->
+      <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-dependency-plugin</artifactId>
+	    <version>3.6.0</version>
+	    <executions>
+		  <execution>
+		    <id>embed-jars</id>
+		    <phase>initialize</phase>
+		    <goals><goal>copy-dependencies</goal></goals>
+		    <configuration>
+		   	  <!-- While it would be cleaner to put this inside the build folder instead of the root,
+		   	  	   the manifest expects them to be in the same location at build as in the final jar -->
+			  <outputDirectory>${project.basedir}/lib</outputDirectory>
+			  <includeArtifactIds>tree-sitter</includeArtifactIds>
+			  <stripVersion>true</stripVersion>
+		    </configuration>
+		  </execution>
+		</executions>
+	  </plugin>
       
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -55,25 +79,77 @@
         <version>3.1.0</version>
         <executions>
           <execution>
-            <id>zig-build</id>
+            <id>zig-build-windows</id>
             <phase>compile</phase>
             <goals><goal>exec</goal></goals>
             <configuration>
               <executable>zig</executable>
               <arguments>
                 <argument>cc</argument>
+                <argument>-target</argument>
+                <argument>x86_64-windows</argument>
                 <argument>-shared</argument>
                 <argument>-o</argument>
-                <argument>${project.basedir}/lib/x86_64-windows-tree-sitter-abap.dll</argument>
+                <argument>${abap.grammar.outDir}/x86_64-windows-tree-sitter-abap.dll</argument>
                 
                 <argument>-I${java.home}/include</argument>
                 <argument>-I${java.home}/include/win32</argument>
-                
-                <argument>-I${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src</argument>
-                
+                <argument>-I${abap.grammar.srcPath}</argument>
                 <argument>${project.basedir}/src/main/native/de_kennyhml_e4_abap_highlighter_TreeSitterAbap.c</argument>
-                <argument>${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src/parser.c</argument>
-                <argument>${grammar.src.dir}/tree-sitter-abap-${abap.grammar.version}/src/scanner.c</argument>
+                <argument>${abap.grammar.srcPath}/parser.c</argument>
+                <argument>${abap.grammar.srcPath}/scanner.c</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>zig-build-linux</id>
+            <phase>compile</phase>
+            <goals><goal>exec</goal></goals>
+            <configuration>
+              <executable>zig</executable>
+              <arguments>
+                <argument>cc</argument>
+                <argument>-target</argument>
+                <argument>x86_64-linux</argument>
+                <argument>-shared</argument>
+                <argument>-fdeclspec</argument>
+                <argument>-D__int64=long long</argument>
+  				<argument>-Wno-ignored-attributes</argument>
+                <argument>-o</argument>
+                <argument>${abap.grammar.outDir}/x86_64-linux-tree-sitter-abap.so</argument>
+                
+                <argument>-I${java.home}/include</argument>
+                <argument>-I${java.home}/include/win32</argument>
+                <argument>-I${abap.grammar.srcPath}</argument>
+                <argument>${project.basedir}/src/main/native/de_kennyhml_e4_abap_highlighter_TreeSitterAbap.c</argument>
+                <argument>${abap.grammar.srcPath}/parser.c</argument>
+                <argument>${abap.grammar.srcPath}/scanner.c</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>zig-build-macos</id>
+            <phase>compile</phase>
+            <goals><goal>exec</goal></goals>
+            <configuration>
+              <executable>zig</executable>
+              <arguments>
+                <argument>cc</argument>
+                <argument>-target</argument>
+                <argument>x86_64-macos</argument>
+                <argument>-shared</argument>
+                <argument>-fdeclspec</argument>
+                <argument>-D__int64=long long</argument>
+  				<argument>-Wno-ignored-attributes</argument>
+                <argument>-o</argument>
+                <argument>${abap.grammar.outDir}/x86_64-macos-tree-sitter-abap.dylib</argument>
+                
+                <argument>-I${java.home}/include</argument>
+                <argument>-I${java.home}/include/win32</argument>
+                <argument>-I${abap.grammar.srcPath}</argument>
+                <argument>${project.basedir}/src/main/native/de_kennyhml_e4_abap_highlighter_TreeSitterAbap.c</argument>
+                <argument>${abap.grammar.srcPath}/parser.c</argument>
+                <argument>${abap.grammar.srcPath}/scanner.c</argument>
               </arguments>
             </configuration>
           </execution>
@@ -85,33 +161,6 @@
         <artifactId>build-helper-maven-plugin</artifactId>
         <version>3.6.0</version>
       </plugin>
-      <plugin>
-	    <groupId>org.apache.maven.plugins</groupId>
-	    <artifactId>maven-dependency-plugin</artifactId>
-	    <version>3.6.0</version>
-	    <executions>
-		  <execution>
-		    <id>embed-jars</id>
-		    <phase>prepare-package</phase>
-		    <goals><goal>copy-dependencies</goal></goals>
-		    <configuration>
-			  <outputDirectory>${project.basedir}/lib</outputDirectory>
-			  <includeArtifactIds>tree-sitter</includeArtifactIds>
-			  <stripVersion>true</stripVersion>
-		    </configuration>
-		  </execution>
-		</executions>
-	  </plugin>
     </plugins>
-
-    <resources>
-      <resource>
-        <directory>lib</directory>
-        <targetPath>lib</targetPath>
-        <includes>
-          <include>**/*.dll</include>
-        </includes>
-      </resource>
-    </resources>
   </build>
 </project>

@@ -6,7 +6,7 @@ import org.treesitter.utils.NativeUtils;
 public class TreeSitterAbap extends TSLanguage {
 
     static {
-        NativeUtils.loadLib("tree-sitter-abap");
+        NativeUtils.loadLib("lib/tree-sitter-abap");
     }
     private native static long tree_sitter_abap();
 
