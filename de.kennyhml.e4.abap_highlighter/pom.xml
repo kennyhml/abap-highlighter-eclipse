@@ -32,7 +32,7 @@
         <executions>
           <execution>
             <id>fetch-grammar</id>
-            <phase>initialize</phase>
+            <phase>generate-sources</phase>
             <goals><goal>run</goal></goals>
             <configuration>
               <target>
@@ -56,14 +56,10 @@
         <executions>
           <execution>
             <id>zig-build</id>
-            <phase>initialize</phase>
+            <phase>compile</phase>
             <goals><goal>exec</goal></goals>
             <configuration>
               <executable>zig</executable>
-              <environmentVariables>
-				<ZIG_LOCAL_CACHE_DIR>${project.build.directory}/zig-cache</ZIG_LOCAL_CACHE_DIR>
-				<ZIG_GLOBAL_CACHE_DIR>${project.build.directory}/zig-global-cache</ZIG_GLOBAL_CACHE_DIR>
-			  </environmentVariables>
               <arguments>
                 <argument>cc</argument>
                 <argument>-shared</argument>
@@ -96,7 +92,7 @@
 	    <executions>
 		  <execution>
 		    <id>embed-jars</id>
-		    <phase>initialize</phase>
+		    <phase>prepare-package</phase>
 		    <goals><goal>copy-dependencies</goal></goals>
 		    <configuration>
 			  <outputDirectory>${project.basedir}/lib</outputDirectory>
