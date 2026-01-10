@@ -5,3 +5,9 @@ target/
 bin/
 workspace/
 *.log
+
+# Compiled natives
+*.dll
+*.so
+*.dylib
+*.pdb
