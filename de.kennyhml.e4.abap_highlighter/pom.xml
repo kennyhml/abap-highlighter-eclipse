@@ -3,8 +3,10 @@
   
   <properties>
     <abap.grammar.version>0.0.1</abap.grammar.version>
-    <abap.grammar.srcPath>${project.build.directory}/tree-sitter-abap-${abap.grammar.version}/src</abap.grammar.srcPath>
-    <abap.grammar.outDir>${project.basedir}/lib</abap.grammar.outDir>
+    <project.externalDeps>${project.basedir}/external</project.externalDeps>
+    <abap.grammar.basedir>${project.build.directory}/tree-sitter-abap-${abap.grammar.version}</abap.grammar.basedir>
+    <abap.grammar.srcPath>${abap.grammar.basedir}/src</abap.grammar.srcPath>
+    <abap.grammar.outDir>${project.externalDeps}/lib</abap.grammar.outDir>
   </properties>
   
   <parent>
@@ -40,12 +42,16 @@
             <configuration>
               <target>
                 <mkdir dir="${project.build.directory}/downloads" />
+                <mkdir dir="${project.externalDeps}/lib" />
                 <get src="https://github.com/kennyhml/tree-sitter-abap/archive/refs/tags/v${abap.grammar.version}.zip" 
                      dest="${project.build.directory}/downloads/grammar.zip" 
                      verbose="true" 
                      usetimestamp="true"/>
                 <unzip src="${project.build.directory}/downloads/grammar.zip" 
                        dest="${project.build.directory}" />
+			    <copy todir="${project.externalDeps}/queries">
+				  <fileset dir="${abap.grammar.basedir}/queries" />
+			     </copy>
               </target>
             </configuration>
           </execution>
@@ -60,12 +66,12 @@
 	    <executions>
 		  <execution>
 		    <id>embed-jars</id>
-		    <phase>initialize</phase>
+		    <phase>generate-sources</phase>
 		    <goals><goal>copy-dependencies</goal></goals>
 		    <configuration>
 		   	  <!-- While it would be cleaner to put this inside the build folder instead of the root,
 		   	  	   the manifest expects them to be in the same location at build as in the final jar -->
-			  <outputDirectory>${project.basedir}/lib</outputDirectory>
+			  <outputDirectory>${project.externalDeps}</outputDirectory>
 			  <includeArtifactIds>tree-sitter</includeArtifactIds>
 			  <stripVersion>true</stripVersion>
 		    </configuration>

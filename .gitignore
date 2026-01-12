@@ -6,6 +6,9 @@ bin/
 workspace/
 *.log
 
+# External stuff generated / downloaded for building
+external/
+
 # Compiled natives
 *.dll
 *.so

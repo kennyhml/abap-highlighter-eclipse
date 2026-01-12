@@ -5,8 +5,8 @@ Bundle-Vendor: %Provider-Name
 Bundle-SymbolicName: de.kennyhml.e4.abap_highlighter;singleton:=true
 Bundle-Localization: plugin
 Bundle-Version: 0.0.1.qualifier
-Bundle-ClassPath: .,
- lib/tree-sitter.jar
+Bundle-ClassPath: ., external/, external/tree-sitter.jar
+ 
 Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text;bundle-version="3.25.200",
  org.eclipse.core.runtime;bundle-version="3.31.100",
