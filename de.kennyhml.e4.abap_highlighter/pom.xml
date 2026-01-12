@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   
   <properties>
-    <abap.grammar.version>0.0.1</abap.grammar.version>
+    <abap.grammar.version>0.0.2</abap.grammar.version>
     <project.externalDeps>${project.basedir}/external</project.externalDeps>
     <abap.grammar.basedir>${project.build.directory}/tree-sitter-abap-${abap.grammar.version}</abap.grammar.basedir>
     <abap.grammar.srcPath>${abap.grammar.basedir}/src</abap.grammar.srcPath>
@@ -49,6 +49,10 @@
                      usetimestamp="true"/>
                 <unzip src="${project.build.directory}/downloads/grammar.zip" 
                        dest="${project.build.directory}" />
+                       
+                 <!-- Force the queries to be redownloaded -->
+                <delete dir="${project.externalDeps}/queries" />
+    			<mkdir dir="${project.externalDeps}/queries" />
 			    <copy todir="${project.externalDeps}/queries">
 				  <fileset dir="${abap.grammar.basedir}/queries" />
 			     </copy>

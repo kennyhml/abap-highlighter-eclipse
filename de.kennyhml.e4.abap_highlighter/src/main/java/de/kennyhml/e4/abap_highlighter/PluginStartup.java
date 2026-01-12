@@ -40,15 +40,6 @@ public class PluginStartup implements IStartup {
 
 			window.getPartService().addPartListener(partListener);
 			ILog.get().info("Plugin started.");
-			
-			
-	        TSParser parser = new TSParser();
-	        TSLanguage json = new TreeSitterAbap();
-	        parser.setLanguage(json);
-	        TSTree tree = parser.parseString(null, "report z_test.");
-	        TSNode rootNode = tree.getRootNode();
-	        TSNode arrayNode = rootNode.getNamedChild(0);
-	        ILog.get().info(arrayNode.getType());
 		});
 	}
 
