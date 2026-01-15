@@ -9,6 +9,9 @@ Parsing and subsequent tokenization is powered by the [tree-sitter-abap](ts_abap
 - Maven (Tycho 5.0.0 compatible)
 - Zig (0.11.0+)
 
+### Building
+To build the plugin, run `mvn clean install`. This will download the tree-sitter grammar. As mentioned, will need zig to compile it.
+
 [eclipse]: https://www.eclipse.org/
 [adt]: https://help.sap.com/docs/btp/sap-business-technology-platform/eclipse-tool-for-abap-environment
 [ts_abap]: https://github.com/kennyhml/tree-sitter-abap
